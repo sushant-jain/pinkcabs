@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.widget.TextViewCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -44,6 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     TextView tvGeoCode;
     RequestQueue rq;
+    Button searchButton;
     private static final String TAG = "MapsActivity";
     public static final Integer PLACE_AUTOCOMPLETE_REQUEST_CODE=2209;
 
@@ -59,6 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         rq= Volley.newRequestQueue(this);
         tvGeoCode= (TextView) findViewById(R.id.tv_geocode);
+        searchButton= (Button) findViewById(R.id.btn_search);
 
     }
 
@@ -79,7 +82,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         try {
             final Intent placeAutoCompleteIntent=new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
-            tvGeoCode.setOnClickListener(new View.OnClickListener() {
+            searchButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivityForResult(placeAutoCompleteIntent,PLACE_AUTOCOMPLETE_REQUEST_CODE);
@@ -180,6 +183,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(this, data);
+                mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()));
                 Log.d(TAG, "Place:" + place.toString());
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
