@@ -1,11 +1,13 @@
 package com.pinkcabs.pinkcabs;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.widget.TextViewCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -15,6 +17,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.appdatasearch.GetRecentContextCall;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -38,6 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     TextView tvGeoCode;
     RequestQueue rq;
     private static final String TAG = "MapsActivity";
+    public static final Integer PLACE_AUTOCOMPLETE_REQUEST_CODE=2209;
 
 
     @Override
@@ -68,6 +76,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         final RouteMaker rm=new RouteMaker(this);
+
+        try {
+            final Intent placeAutoCompleteIntent=new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
+            tvGeoCode.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivityForResult(placeAutoCompleteIntent,PLACE_AUTOCOMPLETE_REQUEST_CODE);
+                }
+            });
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
 
         rm.setOnDirectionsReceivedListener(new RouteMaker.OnDirectionsReceivedListener() {
             @Override
@@ -152,6 +174,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return  stringRequest;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(this, data);
+                Log.d(TAG, "Place:" + place.toString());
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(this, data);
+                Log.d(TAG, status.getStatusMessage());
+            } else if (requestCode == RESULT_CANCELED) {
+
+            }
+        }
+    }
 }
 
 //AIzaSyDIVZ-j79nYVjEW0B99YiUG5zb5Jf_JVWc   geocodind api key
@@ -160,3 +197,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //    AIzaSyAa2CKARbz6bU6Nx6UJNVFG_2hwR3lVgkQ   directions api key
 
 
+//AIzaSyDxdGZkc176riyJN8KfZENp5kNxHU1-Lw4  places api key
