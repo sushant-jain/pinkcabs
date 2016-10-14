@@ -30,6 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -65,10 +67,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        final RouteMaker rm=new RouteMaker(this,mMap);
+        final RouteMaker rm=new RouteMaker(this);
+
+        rm.setOnDirectionsReceivedListener(new RouteMaker.OnDirectionsReceivedListener() {
+            @Override
+            public void displayPolyline(List<LatLng> latLngList) {
+                mMap.addPolyline(new PolylineOptions().addAll(latLngList));
+            }
+
+            @Override
+            public void getDistanceString(String distance) {
+                Log.d(TAG, "getDistanceString: distance="+distance);
+            }
+
+            @Override
+            public void getDistanceValue(Double distance) {
+                Log.d(TAG, "getDistanceValue: distance="+distance);
+            }
+
+            @Override
+            public void getTimeString(String time) {
+                Log.d(TAG, "getTimeString: time="+time);
+            }
+
+            @Override
+            public void getTimeValue(Double time) {
+                Log.d(TAG, "getTimeValue: time="+time);
+            }
+        });
         // Add a marker in Sydney and move the camera
         final LatLng sydney = new LatLng(-34, 151);
-        rm.findPath(sydney,sydney);
+        LatLng xyz=new LatLng(-33,150);
+        rm.findPath(sydney,xyz);
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
