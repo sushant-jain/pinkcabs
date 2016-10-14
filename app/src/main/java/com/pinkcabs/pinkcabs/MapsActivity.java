@@ -22,6 +22,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.PolyUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,9 +65,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        final RouteMaker rm=new RouteMaker(this,mMap);
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
+        final LatLng sydney = new LatLng(-34, 151);
+        rm.findPath(sydney,sydney);
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -84,10 +88,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                              LatLng center=mMap.getCameraPosition().target;
                                              marker.setPosition(center);
                                              rq.add(reverseGeoCodeRequestBuilder(center));
+                                             //rm.findPath(sydney,center);
+
                                          }
                                      }
 
         );
+
     }
     StringRequest reverseGeoCodeRequestBuilder(LatLng ll){
         String basic="https://maps.googleapis.com/maps/api/geocode/json?latlng=";
@@ -114,7 +121,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         return  stringRequest;
     }
+
 }
 
 //AIzaSyDIVZ-j79nYVjEW0B99YiUG5zb5Jf_JVWc   geocodind api key
 //https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=YOUR_API_KEY
+
+//    AIzaSyAa2CKARbz6bU6Nx6UJNVFG_2hwR3lVgkQ   directions api key
+
+
