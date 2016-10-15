@@ -47,6 +47,12 @@
             android:textSize="15sp"/>
     </com.github.florent37.materialtextfield.MaterialTextField>
 
+    <ImageView
+        android:id="@+id/iv_image"
+        android:padding="5dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp" />
+
     <info.hoang8f.widget.FButton
         android:id="@+id/btn_edit_image"
         android:layout_width="wrap_content"
@@ -65,7 +71,7 @@
         android:id="@+id/btn_edit_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit profile"
+        android:text="Save changes to profile"
         fbutton:buttonColor="#424242"
         fbutton:shadowColor="#212121"
         fbutton:shadowEnabled="true"
