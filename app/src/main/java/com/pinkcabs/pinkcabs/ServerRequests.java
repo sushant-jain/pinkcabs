@@ -41,7 +41,7 @@ public class ServerRequests {
         this.callback = callback;
     }
 
-    void getAllCabs(Context ctx) {
+    private void getAllCabs(Context ctx) {
         JsonObjectRequest req = new JsonObjectRequest(
                 Request.Method.GET,
                 ALL_CABS,
