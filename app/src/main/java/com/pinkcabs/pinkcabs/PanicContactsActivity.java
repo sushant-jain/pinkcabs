@@ -48,10 +48,12 @@ public class PanicContactsActivity extends AppCompatActivity {
         lvPanicContact = (ListView) findViewById(R.id.lv_panicContact);
 //        ArrayAdapter<String> panicAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_2, arrayList);
 //        lvPanicContact.setAdapter(panicAdapter);
+        Log.d(TAG, "onCreate: yynhnhn");
         mainDatabase.child("users").child(user.getUid()).child("panic_contacts").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 PanicContact panicContact = dataSnapshot.getValue(PanicContact.class);
+                Log.d(TAG, "onChildAdded: " + dataSnapshot);
                 Log.d(TAG, "onChildAdded: check working\n"+panicContact.getName());
             }
 

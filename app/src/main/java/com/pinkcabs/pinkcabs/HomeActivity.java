@@ -37,8 +37,11 @@ public class HomeActivity extends AppCompatActivity {
                 ColorStateList.valueOf(Color.parseColor("#d50000"))
         );
 
-        Button track = (Button) findViewById(R.id.btn_safety_details);
+        Button track = (Button) findViewById(R.id.btn_track);
         Button account = (Button) findViewById(R.id.btn_myAccount);
+        Button btnSafety = (Button) findViewById(R.id.btn_safety_details);
+        Button btnTakeRide = (Button) findViewById(R.id.btn_take_ride);
+
         account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +90,15 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnTakeRide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         btnSafety.setOnClickListener(new View.OnClickListener() {
             @Override
