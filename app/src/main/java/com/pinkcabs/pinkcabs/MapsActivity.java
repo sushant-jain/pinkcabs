@@ -145,7 +145,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                          public void onCameraMove() {
                                              LatLng center=mMap.getCameraPosition().target;
                                              marker.setPosition(center);
-                                             rq.add(reverseGeoCodeRequestBuilder(center));
+                                            // rq.add(reverseGeoCodeRequestBuilder(center));
                                              //rm.findPath(sydney,center);
 
                                          }
@@ -207,3 +207,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //AIzaSyDxdGZkc176riyJN8KfZENp5kNxHU1-Lw4  places api key
 
 // AIzaSyA9QBKcYiu3LbbAzmKuu09Xret_-hqF9wI places api web service
+
+
+//198.199.120.41/pinkcabs/v1/drivers
