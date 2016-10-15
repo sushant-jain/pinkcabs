@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -28,11 +29,25 @@ public class SafetyActivity extends FragmentActivity implements OnMapReadyCallba
     Location mLastLocation;
     NearbyLocator nearbyLocator;
     RouteMaker rm;
+    TextView tvpolName, tvpolAddress, tvpolContact, tvpolDis, tvpolTime, tvhospName, tvhospAddress, tvhospContact, tvhospDis, tvhospTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_safety);
+
+        tvpolName = (TextView) findViewById(R.id.tv_pol_name);
+        tvpolAddress = (TextView) findViewById(R.id.tv_pol_address);
+        tvpolContact = (TextView) findViewById(R.id.tv_pol_contact);
+        tvpolDis = (TextView) findViewById(R.id.tv_pol_dis);
+        tvpolTime = (TextView) findViewById(R.id.tv_pol_time);
+
+        tvhospName = (TextView) findViewById(R.id.tv_hosp_name);
+        tvhospAddress = (TextView) findViewById(R.id.tv_hosp_address);
+        tvhospContact = (TextView) findViewById(R.id.tv_hosp_contact);
+        tvhospDis = (TextView) findViewById(R.id.tv_hosp_dis);
+        tvhospTime = (TextView) findViewById(R.id.tv_hosp_time);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
