@@ -43,6 +43,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name="com.pinkcabs.pinkcabs.SafetyActivity" android:label="@string/title_activity_safety">
 
         </activity>
         <activity android:name=".HomeActivity" />

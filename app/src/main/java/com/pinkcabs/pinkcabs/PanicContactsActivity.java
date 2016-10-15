@@ -13,11 +13,19 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.pinkcabs.pinkcabs.Models.PanicContact;
+
 import java.util.ArrayList;
 
 public class PanicContactsActivity extends AppCompatActivity {
 
     ListView lvPanicContact;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +62,13 @@ public class PanicContactsActivity extends AppCompatActivity {
         alert.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
+                DatabaseReference mainDatabase,usersList;
+                mainDatabase = FirebaseDatabase.getInstance().getReference();
+                String name = etNamePanic.getText().toString();
+                String contact = etPanicNumber.getText().toString();
+                PanicContact panicContact = new PanicContact(name,contact);
+                mainDatabase.child("users").child(user.getUid()).child("painc_contacts").push().setValue(panicContact);
 
 
 
