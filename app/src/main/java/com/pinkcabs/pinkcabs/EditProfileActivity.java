@@ -12,8 +12,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,9 +24,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.pinkcabs.pinkcabs.Models.FBUser;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -32,6 +37,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     EditText etName, etContact;
     Button btnEditProfile, btnEditImage;
+                    StorageReference storageRef;
     boolean picChanged=false;
     private static final String TAG = "EditProfileActivity";
     DatabaseReference mainDatabase,usersList;
@@ -51,6 +57,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
         mainDatabase = FirebaseDatabase.getInstance().getReference();
         usersList = mainDatabase.child("users");
+                    FirebaseStorage storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReferenceFromUrl("gs://pinkcabs-90647.appspot.com/DPs/"+user.getUid());
 
 
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
@@ -60,13 +68,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 String s1 = etName.getText().toString();
                 String s2 = etContact.getText().toString();
-                if(picChanged==true)
-                {
-                    FirebaseStorage storage = FirebaseStorage.getInstance();
-                    StorageReference storageRef = storage.getReferenceFromUrl("gs://pinkcabs-90647.appspot.com/DPs");
-
-
-                }
                 FBUser fbuser = new FBUser(s2,user.getEmail(),"",s2);
                 usersList.child(user.getUid()).setValue(fbuser).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -99,6 +100,8 @@ public class EditProfileActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
             uri = data.getData();
+            uploadPhoto(uri);
+
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
@@ -111,5 +114,30 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         }
     }
+
+    protected void uploadPhoto(Uri uri) {
+
+        Toast.makeText(this, "Uploading...", Toast.LENGTH_SHORT).show();
+        
+        storageRef.putFile(uri)
+                .addOnSuccessListener(EditProfileActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Log.d(TAG, "uploadPhoto:onSuccess:" +
+                                taskSnapshot.getMetadata().getReference().getPath());
+                        Toast.makeText(EditProfileActivity.this, "Image uploaded",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "uploadPhoto:onError", e);
+                        Toast.makeText(EditProfileActivity.this, "Upload failed",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 
 }
