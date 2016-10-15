@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.gms.drive.query.Query;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,10 +29,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.pinkcabs.pinkcabs.Models.FBUser;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.util.UUID;
+
 
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -55,7 +53,8 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+        mainDatabase = FirebaseDatabase.getInstance().getReference();
+        usersList = mainDatabase.child("users");
 
         etName = (EditText) findViewById(R.id.et_name);
         etContact = (EditText) findViewById(R.id.et_contact);
@@ -63,8 +62,22 @@ public class EditProfileActivity extends AppCompatActivity {
         btnEditImage = (Button) findViewById(R.id.btn_edit_image);
         btnEditProfile = (Button) findViewById(R.id.btn_edit_profile);
 
-        mainDatabase = FirebaseDatabase.getInstance().getReference();
-        usersList = mainDatabase.child("users");
+        usersList.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                FBUser fbuser = dataSnapshot.getValue(FBUser.class);
+                etName.setText(fbuser.getName());
+                etContact.setText(fbuser.getContact());
+                etTrustedContact.setText(fbuser.getTrustedContact());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
                     FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRef = storage.getReferenceFromUrl("gs://pinkcabs-90647.appspot.com/DPs/"+user.getUid());
 
@@ -77,7 +90,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 String s1 = etName.getText().toString();
                 String s2 = etContact.getText().toString();
                 String s3 = etTrustedContact.getText().toString();
-                FBUser fbuser = new FBUser(s2,user.getEmail(),"",s1);
+                FBUser fbuser = new FBUser(s1,user.getEmail(),s2,s3);
                 usersList.orderByChild("contact").equalTo(s3).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
