@@ -1,4 +1,4 @@
-package com.pinkcabs.pinkcabs.Models;
+package com.pinkcabs.pinkcabs;
 
 import android.content.Context;
 
