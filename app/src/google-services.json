@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "323167168934",
+    "firebase_url": "https://pinkcabs-90647.firebaseio.com",
+    "project_id": "pinkcabs-90647",
+    "storage_bucket": "pinkcabs-90647.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323167168934:android:c6de88e12b3f556a",
+        "android_client_info": {
+          "package_name": "com.pinkcabs.pinkcabs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323167168934-iou7liudjb8d7kut31scsbm95l0je81c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pinkcabs.pinkcabs",
+            "certificate_hash": "6BEB43AE4F3064B1871AD044D886EC173EFAD123"
+          }
+        },
+        {
+          "client_id": "323167168934-qa1nhvo6sb82bsb6th734gsf4g2v0uft.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZ865uSX7vfkiuYDs2eJOgKSlbR-MnINI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323167168934-qa1nhvo6sb82bsb6th734gsf4g2v0uft.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
