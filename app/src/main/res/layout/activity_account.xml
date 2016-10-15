@@ -15,7 +15,7 @@
 
     <info.hoang8f.widget.FButton
         android:id="@+id/btn_edit_prof"
-        android:text="Edit Profie"
+        android:text="Edit Profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         fbutton:buttonColor="#757575"
