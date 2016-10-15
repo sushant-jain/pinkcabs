@@ -13,7 +13,6 @@ import android.util.Log;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 
-import static com.firebase.ui.auth.ui.AcquireEmailHelper.RC_SIGN_IN;
 
 public class EntryActivity extends AppCompatActivity {
 
