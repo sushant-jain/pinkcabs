@@ -49,7 +49,7 @@ public class PanicContactsActivity extends AppCompatActivity {
         final ArrayAdapter<String> panicAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
         lvPanicContact.setAdapter(panicAdapter);
         Log.d(TAG, "onCreate: yynhnhn");
-        mainDatabase.child("users").child(user.getUid()).child("panic_contacts").addChildEventListener(new ChildEventListener() {
+        mainDatabase.child("panic_contacts").child(user.getUid()).addChildEventListener(new ChildEventListener() {
 
 
             @Override
@@ -111,7 +111,7 @@ public class PanicContactsActivity extends AppCompatActivity {
                 String name = etNamePanic.getText().toString();
                 String contact = etPanicNumber.getText().toString();
                 PanicContact panicContact = new PanicContact(name,contact);
-                mainDatabase.child("users").child(user.getUid()).child("panic_contacts").push().setValue(panicContact).addOnCompleteListener(new OnCompleteListener<Void>() {
+                mainDatabase.child("panic_contacts").child(user.getUid()).push().setValue(panicContact).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Intent intent = new Intent(getApplicationContext(),AccountActivity.class);

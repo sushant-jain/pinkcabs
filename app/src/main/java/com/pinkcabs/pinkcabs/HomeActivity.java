@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
 
         final ArrayList<String> arrayList = new ArrayList<>();
         mainDatabase = FirebaseDatabase.getInstance().getReference();
-        mainDatabase.child("users").child(user.getUid()).child("panic_contacts").addChildEventListener(new ChildEventListener() {
+        mainDatabase.child("panic_contacts").child(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 PanicContact panicContact = dataSnapshot.getValue(PanicContact.class);
