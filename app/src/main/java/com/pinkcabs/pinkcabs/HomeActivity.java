@@ -11,7 +11,5 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Button track = (Button) findViewById(R.id.safetyDetails);
-
     }
 }
