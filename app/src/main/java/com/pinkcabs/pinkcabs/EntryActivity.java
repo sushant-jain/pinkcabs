@@ -7,8 +7,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import android.util.Log;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;

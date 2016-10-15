@@ -31,5 +31,13 @@ public class AccountActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnPanicContacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent  = new Intent(getApplicationContext(), PanicContactsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
