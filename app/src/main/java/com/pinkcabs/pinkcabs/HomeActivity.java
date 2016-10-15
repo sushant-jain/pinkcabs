@@ -7,20 +7,67 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.pinkcabs.pinkcabs.Models.PanicContact;
+
+import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
     public FloatingActionButton emergency_two;
     public FloatingActionButton emergency_one;
     public FloatingActionButton emergency_send;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+    DatabaseReference mainDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        final ArrayList<String> arrayList = new ArrayList<>();
+        mainDatabase = FirebaseDatabase.getInstance().getReference();
+        mainDatabase.child("users").child(user.getUid()).child("panic_contacts").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                PanicContact panicContact = dataSnapshot.getValue(PanicContact.class);
+                arrayList.add(panicContact.getContact());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
 
         emergency_two = (FloatingActionButton) findViewById(R.id.btn_emergency2);
         emergency_two.setBackgroundTintList(
