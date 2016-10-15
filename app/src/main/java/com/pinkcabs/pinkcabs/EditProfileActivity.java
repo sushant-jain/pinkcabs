@@ -52,7 +52,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         etName = (EditText) findViewById(R.id.et_name);
         etContact = (EditText) findViewById(R.id.et_contact);
-        etTrustedContact = (EditText) findViewById(R.id.et_trusted_contact);
+       // etTrustedContact = (EditText) findViewById(R.id.et_trusted_contact);
         btnEditImage = (Button) findViewById(R.id.btn_edit_image);
         btnEditProfile = (Button) findViewById(R.id.btn_edit_profile);
 
@@ -69,8 +69,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 String s1 = etName.getText().toString();
                 String s2 = etContact.getText().toString();
-                String s3 = etTrustedContact.getText().toString();
-                FBUser fbuser = new FBUser(s2,user.getEmail(),"",s1);
+//                String s3 = etTrustedContact.getText().toString();
+                 FBUser fbuser = new FBUser(s2,user.getEmail(),"",s1);
                 usersList.child(user.getUid()).setValue(fbuser).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
