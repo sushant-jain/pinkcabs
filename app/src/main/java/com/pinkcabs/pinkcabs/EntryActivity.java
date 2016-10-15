@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -24,11 +27,10 @@ public class EntryActivity extends AppCompatActivity {
         de.hdodenhof.circleimageview.CircleImageView womanWait = (CircleImageView) findViewById(R.id.womanForCab);
         ImageView cab = (ImageView) findViewById(R.id.img_cab);
         Animation animation2 = AnimationUtils.loadAnimation(EntryActivity.this, R.anim.movers);
-
+        animation2.setRepeatCount(Animation.INFINITE);
         cab.startAnimation(animation2);
 
         // pass intent for he activity depending on login info
-
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -52,9 +54,7 @@ public class EntryActivity extends AppCompatActivity {
 //                Intent i =  new Intent(entry_class.this, MainActivity.class);
 //                startActivity(i);
             }
-        }, 3900);
-
-        //dhruv rathi
+        }, 2000);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

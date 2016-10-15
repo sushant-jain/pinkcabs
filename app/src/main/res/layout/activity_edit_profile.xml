@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_edit_profile"
@@ -26,7 +31,7 @@
             android:layout_height="wrap_content"
             android:textColor="#455A64"
             android:textColorHint="#78909C"
-            android:hint="Name"
+            android:hint="N A M E"
             app:mtf_openKeyboardOnFocus="true"/>
     </com.github.florent37.materialtextfield.MaterialTextField>
 
@@ -43,9 +48,27 @@
             android:layout_height="wrap_content"
             android:textColor="#455A64"
             android:textColorHint="#78909C"
-            android:hint="Contact No:"
+            android:hint="CONTACT NO :"
             android:textSize="15sp"/>
     </com.github.florent37.materialtextfield.MaterialTextField>
+
+    <com.github.florent37.materialtextfield.MaterialTextField
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:mtf_image="@drawable/ic_contacts_black_24dp"
+        app:mtf_labelColor="#757575"
+        app:mtf_openKeyboardOnFocus="true">
+        <EditText
+            android:id="@+id/et_trusted_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#455A64"
+            android:textColorHint="#78909C"
+            android:hint="Trusted Contact No:"
+            android:textSize="15sp"/>
+    </com.github.florent37.materialtextfield.MaterialTextField>
+
 
     <ImageView
         android:id="@+id/iv_image"
@@ -53,32 +76,45 @@
         android:layout_width="200dp"
         android:layout_height="200dp" />
 
-    <info.hoang8f.widget.FButton
+    <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/btn_edit_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit Image"
-        fbutton:buttonColor="#424242"
-        fbutton:shadowColor="#212121"
-        fbutton:shadowEnabled="true"
-        fbutton:shadowHeight="5dp"
-        fbutton:cornerRadius="5dp"
-        android:layout_marginTop="20dp"
-        android:textSize="20dp"
-        android:textColor="#ffffff"/>
+        android:layout_width="180dp"
+        android:layout_marginLeft="20dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/btn_take_ride"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        app:fb_borderColor="#FFFFFF"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="#00897b"
+        app:fb_focusColor="#9bd823"
+        app:fb_radius="30dp"
+        app:fb_text="EDIT IMAGE"
+        app:fb_textColor="#FFFFFF" />
 
-    <info.hoang8f.widget.FButton
+    <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/btn_edit_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save changes to profile"
-        fbutton:buttonColor="#424242"
-        fbutton:shadowColor="#212121"
-        fbutton:shadowEnabled="true"
-        fbutton:shadowHeight="5dp"
-        fbutton:cornerRadius="5dp"
-        android:layout_marginTop="20dp"
-        android:textSize="20dp"
-        android:textColor="#ffffff"/>
+        android:layout_width="180dp"
+        android:layout_marginLeft="20dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/btn_take_ride"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        app:fb_borderColor="#FFFFFF"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="#00897b"
+        app:fb_focusColor="#9bd823"
+        app:fb_radius="30dp"
+        app:fb_text="Save changes to profile"
+        app:fb_textColor="#FFFFFF" />
+
 
 </LinearLayout>
+
+</ScrollView>
