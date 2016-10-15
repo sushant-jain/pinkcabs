@@ -13,8 +13,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Button track = (Button) findViewById(R.id.safetyDetails);
-        Button account = (Button) findViewById(R.id.myAccount);
+        Button track = (Button) findViewById(R.id.btn_safety_details );
+        Button account = (Button) findViewById(R.id.btn_myAccount);
         account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
