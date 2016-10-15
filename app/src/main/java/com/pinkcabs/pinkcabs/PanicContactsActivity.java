@@ -43,7 +43,7 @@ public class PanicContactsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_panic_contacts);
 
 
-        ArrayList<PanicContact> arrayList = new ArrayList<>();
+        final ArrayList<PanicContact> arrayList = new ArrayList<>();
         mainDatabase = FirebaseDatabase.getInstance().getReference();
         lvPanicContact = (ListView) findViewById(R.id.lv_panicContact);
 //        ArrayAdapter<String> panicAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_2, arrayList);
