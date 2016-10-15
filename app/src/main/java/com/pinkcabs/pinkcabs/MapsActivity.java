@@ -79,8 +79,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         final RouteMaker rm=new RouteMaker(this);
 
-        NearbyLocator nl=new NearbyLocator(this);
-        nl.findNearbyPlacesByType(new LatLng(28.644800,77.216721),"police");
+//        NearbyLocator nl=new NearbyLocator(this);
+//        nl.findNearbyPlacesByType(new LatLng(28.644800,77.216721),"police");  //just some dummy testing code
 
         try {
             final Intent placeAutoCompleteIntent=new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
@@ -144,37 +144,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                          public void onCameraMove() {
                                              LatLng center=mMap.getCameraPosition().target;
                                              marker.setPosition(center);
-                                             rq.add(reverseGeoCodeRequestBuilder(center));
+                                            // rq.add(reverseGeoCodeRequestBuilder(center));
                                              //rm.findPath(sydney,center);
 
                                          }
                                      }
         );
-    }
-    StringRequest reverseGeoCodeRequestBuilder(LatLng ll){
-        String basic="https://maps.googleapis.com/maps/api/geocode/json?latlng=";
-        String key="&key=AIzaSyDIVZ-j79nYVjEW0B99YiUG5zb5Jf_JVWc";
-        final String requestString=basic+ll.latitude+","+ll.longitude+key;
-        StringRequest stringRequest=new StringRequest(Request.Method.GET, requestString, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                //Log.d(TAG, "onResponse: "+response);
-                try {
-                    JSONObject responseJSon =new JSONObject(response);
-                    JSONArray results=responseJSon.getJSONArray("results");
-                    JSONObject jobj=results.getJSONObject(0);
-                    tvGeoCode.setText(jobj.getString("formatted_address"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "onErrorResponse: "+error.toString());
-            }
-        });
-        return  stringRequest;
     }
 
     @Override
@@ -204,3 +179,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //AIzaSyDxdGZkc176riyJN8KfZENp5kNxHU1-Lw4  places api key
 
 // AIzaSyA9QBKcYiu3LbbAzmKuu09Xret_-hqF9wI places api web service
+
+
+//198.199.120.41/pinkcabs/v1/drivers

@@ -24,24 +24,24 @@ import java.util.Map;
 public class ServerRequests {
 
     private RequestCallback callback;
-    private static ServerRequests requests=null;
+//    private static ServerRequests requests=null;
     private String ALL_CABS="http://198.199.120.41/pinkcabs/v1/drivers";
     private String CABS_WITHIN_6="http://198.199.120.41/pinkcabs/v1/driver/lat=_LAT_/long=_LONG_";
     private String SELECT_A_DRIVER="http://198.199.120.41/pinkcabs/v1/driver/_DRV_FIREID_/allot";
     private String RELEASE_A_DRIVER="http://198.199.120.41/pinkcabs/v1/driver/_DRV_FIREID_/release";
     private String UPDATE_MY_LOCATION="http://198.199.120.41/pinkcabs/v1/user/location/_USER_FIRE_ID_";
     private String NEW_USER="http://198.199.120.41/pinkcabs/v1/register/user";
-
-    public static ServerRequests getInstance() {
-        if (requests==null) requests=new ServerRequests();
-        return requests;
-    }
+//
+//    public static ServerRequests getInstance() {
+//        if (requests==null) requests=new ServerRequests();
+//        return requests;
+//    }
 
     public void setCallback(RequestCallback callback) {
         this.callback = callback;
     }
 
-    void getAllCabs(Context ctx) {
+    private void getAllCabs(Context ctx) {
         JsonObjectRequest req = new JsonObjectRequest(
                 Request.Method.GET,
                 ALL_CABS,
@@ -150,7 +150,7 @@ public class ServerRequests {
         Volley.newRequestQueue(ctx).add(req);
     }
 
-    void newUser(Context ctx, final String userFirebaseId, double latitude, double longitude) {
+    void newUser(Context ctx, final String userFirebaseId, final double latitude, final double longitude) {
         StringRequest req=new StringRequest(
                 Request.Method.POST,
                 NEW_USER,
@@ -176,6 +176,8 @@ public class ServerRequests {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String,String> map=new HashMap<>();
                 map.put("user_fireb_id",userFirebaseId);
+                map.put("latitude", String.valueOf(latitude));
+                map.put("longitude", String.valueOf(longitude));
                 return map;
             }
 

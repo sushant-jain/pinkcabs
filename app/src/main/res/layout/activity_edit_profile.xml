@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -48,6 +52,24 @@
             android:textSize="15sp"/>
     </com.github.florent37.materialtextfield.MaterialTextField>
 
+    <com.github.florent37.materialtextfield.MaterialTextField
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:mtf_image="@drawable/ic_contacts_black_24dp"
+        app:mtf_labelColor="#757575"
+        app:mtf_openKeyboardOnFocus="true">
+        <EditText
+            android:id="@+id/et_trusted_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#455A64"
+            android:textColorHint="#78909C"
+            android:hint="Trusted Contact No:"
+            android:textSize="15sp"/>
+    </com.github.florent37.materialtextfield.MaterialTextField>
+
+
     <ImageView
         android:id="@+id/iv_image"
         android:padding="5dp"
@@ -94,3 +116,5 @@
 
 
 </LinearLayout>
+
+</ScrollView>
