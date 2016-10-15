@@ -43,15 +43,21 @@ public class PanicContactsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_panic_contacts);
 
 
-        ArrayList<PanicContact> arrayList = new ArrayList<>();
+        final ArrayList<String> arrayList = new ArrayList<>();
         mainDatabase = FirebaseDatabase.getInstance().getReference();
         lvPanicContact = (ListView) findViewById(R.id.lv_panicContact);
-//        ArrayAdapter<String> panicAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_2, arrayList);
-//        lvPanicContact.setAdapter(panicAdapter);
-        mainDatabase.child("users").child(user.getUid()).child("panic_contacts").addChildEventListener(new ChildEventListener() {
+        final ArrayAdapter<String> panicAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
+        lvPanicContact.setAdapter(panicAdapter);
+        Log.d(TAG, "onCreate: yynhnhn");
+        mainDatabase.child("panic_contacts").child(user.getUid()).addChildEventListener(new ChildEventListener() {
+
+
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 PanicContact panicContact = dataSnapshot.getValue(PanicContact.class);
+                arrayList.add(panicContact.getName());
+                panicAdapter.notifyDataSetChanged();
+                Log.d(TAG, "onChildAdded: " + dataSnapshot);
                 Log.d(TAG, "onChildAdded: check working\n"+panicContact.getName());
             }
 
@@ -105,7 +111,7 @@ public class PanicContactsActivity extends AppCompatActivity {
                 String name = etNamePanic.getText().toString();
                 String contact = etPanicNumber.getText().toString();
                 PanicContact panicContact = new PanicContact(name,contact);
-                mainDatabase.child("users").child(user.getUid()).child("panic_contacts").push().setValue(panicContact).addOnCompleteListener(new OnCompleteListener<Void>() {
+                mainDatabase.child("panic_contacts").child(user.getUid()).push().setValue(panicContact).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Intent intent = new Intent(getApplicationContext(),AccountActivity.class);
