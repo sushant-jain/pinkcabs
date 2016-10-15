@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_home"
     android:layout_width="match_parent"
@@ -12,27 +13,68 @@
 
     <Button
         android:id="@+id/btn_take_ride"
-        android:text="take ride"
         android:layout_width="100dp"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:text="take ride" />
 
     <Button
         android:id="@+id/btn_track"
-        android:text="track"
-        android:layout_below="@id/btn_take_ride"
         android:layout_width="100dp"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_below="@id/btn_take_ride"
+        android:text="track" />
+
     <Button
         android:id="@+id/btn_safety_details"
         android:layout_width="100dp"
-        android:text="safety"
+        android:layout_height="40dp"
         android:layout_below="@id/btn_track"
-        android:layout_height="40dp" />
+        android:text="safety" />
+
     <Button
         android:id="@+id/btn_myAccount"
-        android:text="account"
-        android:layout_below="@id/btn_safety_details"
         android:layout_width="100dp"
-        android:layout_height="40dp" />
+        android:layout_height="40dp"
+        android:layout_below="@id/btn_safety_details"
+        android:text="account" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn_emergency2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="7dp"
+            android:clickable="true"
+            android:elevation="10dp"
+            app:fabSize="normal" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn_emergency1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="7dp"
+            android:clickable="true"
+            android:visibility="gone"
+            android:elevation="10dp"
+            app:fabSize="normal"  />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn_emergency_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="7dp"
+            android:clickable="true"
+            android:elevation="10dp"
+            android:visibility="gone"
+            app:fabSize="normal" />
 
 </RelativeLayout>

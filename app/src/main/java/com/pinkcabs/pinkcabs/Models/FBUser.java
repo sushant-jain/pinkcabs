@@ -27,6 +27,13 @@ public class FBUser {
         this.trackIds = trackIds;
     }
 
+    public FBUser(String contact, String email, String photoId, String name) {
+        this.contact = contact;
+        this.email = email;
+        this.photoId = photoId;
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

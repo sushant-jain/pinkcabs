@@ -1,20 +1,18 @@
 package com.pinkcabs.pinkcabs.Models;
 
 /**
- * Created by aanyajindal on 15/10/16.
+ * Created by jatin on 15/10/16.
  */
-
 public class PanicContact {
-
     String name;
     String contact;
-
-    public PanicContact() {
-    }
 
     public PanicContact(String name, String contact) {
         this.name = name;
         this.contact = contact;
+    }
+
+    public PanicContact() {
     }
 
     public String getName() {
