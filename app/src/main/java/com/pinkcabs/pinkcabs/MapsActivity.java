@@ -145,7 +145,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                          public void onCameraMove() {
                                              LatLng center=mMap.getCameraPosition().target;
                                              marker.setPosition(center);
-                                             rq.add(reverseGeoCodeRequestBuilder(center));
+                                            // rq.add(reverseGeoCodeRequestBuilder(center));
                                              //rm.findPath(sydney,center);
 
                                          }
