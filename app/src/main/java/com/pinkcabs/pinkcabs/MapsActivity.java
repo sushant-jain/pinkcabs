@@ -1,11 +1,14 @@
 package com.pinkcabs.pinkcabs;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.widget.TextViewCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -15,6 +18,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.appdatasearch.GetRecentContextCall;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -30,12 +38,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     TextView tvGeoCode;
     RequestQueue rq;
+    Button searchButton;
     private static final String TAG = "MapsActivity";
+    public static final Integer PLACE_AUTOCOMPLETE_REQUEST_CODE=2209;
 
 
     @Override
@@ -49,6 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         rq= Volley.newRequestQueue(this);
         tvGeoCode= (TextView) findViewById(R.id.tv_geocode);
+        searchButton= (Button) findViewById(R.id.btn_search);
 
     }
 
@@ -65,10 +78,52 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        final RouteMaker rm=new RouteMaker(this,mMap);
+        final RouteMaker rm=new RouteMaker(this);
+
+        try {
+            final Intent placeAutoCompleteIntent=new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
+            searchButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivityForResult(placeAutoCompleteIntent,PLACE_AUTOCOMPLETE_REQUEST_CODE);
+                }
+            });
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+
+        rm.setOnDirectionsReceivedListener(new RouteMaker.OnDirectionsReceivedListener() {
+            @Override
+            public void displayPolyline(List<LatLng> latLngList) {
+                mMap.addPolyline(new PolylineOptions().addAll(latLngList));
+            }
+
+            @Override
+            public void getDistanceString(String distance) {
+                Log.d(TAG, "getDistanceString: distance="+distance);
+            }
+
+            @Override
+            public void getDistanceValue(Double distance) {
+                Log.d(TAG, "getDistanceValue: distance="+distance);
+            }
+
+            @Override
+            public void getTimeString(String time) {
+                Log.d(TAG, "getTimeString: time="+time);
+            }
+
+            @Override
+            public void getTimeValue(Double time) {
+                Log.d(TAG, "getTimeValue: time="+time);
+            }
+        });
         // Add a marker in Sydney and move the camera
         final LatLng sydney = new LatLng(-34, 151);
-        rm.findPath(sydney,sydney);
+        LatLng xyz=new LatLng(-33,150);
+        rm.findPath(sydney,xyz);
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -122,6 +177,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return  stringRequest;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(this, data);
+                mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()));
+                Log.d(TAG, "Place:" + place.toString());
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(this, data);
+                Log.d(TAG, status.getStatusMessage());
+            } else if (requestCode == RESULT_CANCELED) {
+
+            }
+        }
+    }
 }
 
 //AIzaSyDIVZ-j79nYVjEW0B99YiUG5zb5Jf_JVWc   geocodind api key
@@ -130,3 +201,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //    AIzaSyAa2CKARbz6bU6Nx6UJNVFG_2hwR3lVgkQ   directions api key
 
 
+//AIzaSyDxdGZkc176riyJN8KfZENp5kNxHU1-Lw4  places api key
