@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pinkcabs.pinkcabs.Models.PanicContact;
@@ -27,9 +31,11 @@ import java.util.ArrayList;
 
 public class PanicContactsActivity extends AppCompatActivity {
 
+    private static final String TAG = "PanicContactsActivity";
     ListView lvPanicContact;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        DatabaseReference mainDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +43,38 @@ public class PanicContactsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_panic_contacts);
 
 
-//        ArrayList<String> arrayList = null;
-//        lvPanicContact = (ListView) findViewById(R.id.lv_panicContact);
+        ArrayList<PanicContact> arrayList = new ArrayList<>();
+        mainDatabase = FirebaseDatabase.getInstance().getReference();
+        lvPanicContact = (ListView) findViewById(R.id.lv_panicContact);
 //        ArrayAdapter<String> panicAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_2, arrayList);
 //        lvPanicContact.setAdapter(panicAdapter);
+        mainDatabase.child("users").child(user.getUid()).child("panic_contacts").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                PanicContact panicContact = dataSnapshot.getValue(PanicContact.class);
+                Log.d(TAG, "onChildAdded: check working\n"+panicContact.getName());
+            }
 
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
     }
@@ -67,7 +100,7 @@ public class PanicContactsActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                DatabaseReference mainDatabase,usersList;
+                DatabaseReference mainDatabase;
                 mainDatabase = FirebaseDatabase.getInstance().getReference();
                 String name = etNamePanic.getText().toString();
                 String contact = etPanicNumber.getText().toString();
