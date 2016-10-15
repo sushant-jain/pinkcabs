@@ -3,6 +3,7 @@ package com.pinkcabs.pinkcabs;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -11,11 +12,16 @@ import static com.firebase.ui.auth.ui.AcquireEmailHelper.RC_SIGN_IN;
 
 public class EntryActivity extends AppCompatActivity {
 
+    private static final String TAG = "EntryActivity";
+    public static final int RC_SIGN_IN  = 101;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry);
 
+        Log.d(TAG, "onCreate: here!");
         //dhruv rathi
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {

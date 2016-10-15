@@ -35,19 +35,20 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps">
-            </activity>
-        <activity android:name=".EntryActivity" />
-        <activity android:name=".HomeActivity">
+            android:label="@string/title_activity_maps"></activity>
+
+        <activity android:name=".EntryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".AccountActivity">
 
         </activity>
-        <activity android:name=".EditProfileActivity" />
-        <activity android:name=".AccountActivity"></activity>
     </application>
 
 </manifest>
