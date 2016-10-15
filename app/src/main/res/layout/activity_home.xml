@@ -11,27 +11,27 @@
     tools:context="com.pinkcabs.pinkcabs.HomeActivity">
 
     <Button
-        android:id="@+id/takeRide"
+        android:id="@+id/btn_take_ride"
         android:text="take ride"
         android:layout_width="100dp"
         android:layout_height="40dp" />
 
     <Button
-        android:id="@+id/panic"
-        android:text="panic"
-        android:layout_below="@id/takeRide"
+        android:id="@+id/btn_track"
+        android:text="track"
+        android:layout_below="@id/btn_take_ride"
         android:layout_width="100dp"
         android:layout_height="40dp" />
     <Button
-        android:id="@+id/safetyDetails"
+        android:id="@+id/btn_safety_details"
         android:layout_width="100dp"
         android:text="safety"
-        android:layout_below="@id/panic"
+        android:layout_below="@id/btn_track"
         android:layout_height="40dp" />
     <Button
-        android:id="@+id/myAccount"
+        android:id="@+id/btn_myAccount"
         android:text="account"
-        android:layout_below="@id/safetyDetails"
+        android:layout_below="@id/btn_safety_details"
         android:layout_width="100dp"
         android:layout_height="40dp" />
 
