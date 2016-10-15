@@ -43,16 +43,20 @@ public class PanicContactsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_panic_contacts);
 
 
-        ArrayList<PanicContact> arrayList = new ArrayList<>();
+        final ArrayList<String> arrayList = new ArrayList<>();
         mainDatabase = FirebaseDatabase.getInstance().getReference();
         lvPanicContact = (ListView) findViewById(R.id.lv_panicContact);
-//        ArrayAdapter<String> panicAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_2, arrayList);
-//        lvPanicContact.setAdapter(panicAdapter);
+        final ArrayAdapter<String> panicAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
+        lvPanicContact.setAdapter(panicAdapter);
         Log.d(TAG, "onCreate: yynhnhn");
         mainDatabase.child("users").child(user.getUid()).child("panic_contacts").addChildEventListener(new ChildEventListener() {
+
+
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 PanicContact panicContact = dataSnapshot.getValue(PanicContact.class);
+                arrayList.add(panicContact.getName());
+                panicAdapter.notifyDataSetChanged();
                 Log.d(TAG, "onChildAdded: " + dataSnapshot);
                 Log.d(TAG, "onChildAdded: check working\n"+panicContact.getName());
             }
