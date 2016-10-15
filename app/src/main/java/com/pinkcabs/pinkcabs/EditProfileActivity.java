@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +33,7 @@ public class EditProfileActivity extends AppCompatActivity {
     EditText etName, etContact;
     Button btnEditProfile, btnEditImage;
     boolean picChanged=false;
+    private static final String TAG = "EditProfileActivity";
     DatabaseReference mainDatabase,usersList;
 
     @Override
@@ -45,7 +47,7 @@ public class EditProfileActivity extends AppCompatActivity {
         etName = (EditText) findViewById(R.id.et_name);
         etContact = (EditText) findViewById(R.id.et_contact);
         btnEditImage = (Button) findViewById(R.id.btn_edit_image);
-        btnEditProfile = (Button) findViewById(R.id.btn_edit_image);
+        btnEditProfile = (Button) findViewById(R.id.btn_edit_profile);
 
         mainDatabase = FirebaseDatabase.getInstance().getReference();
         usersList = mainDatabase.child("users");
@@ -54,6 +56,7 @@ public class EditProfileActivity extends AppCompatActivity {
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick: started");
 
                 String s1 = etName.getText().toString();
                 String s2 = etContact.getText().toString();
