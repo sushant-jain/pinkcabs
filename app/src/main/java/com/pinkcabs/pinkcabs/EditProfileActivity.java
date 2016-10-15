@@ -33,12 +33,15 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
+import mehdi.sakout.fancybuttons.FancyButton;
 
 public class EditProfileActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 12341;
     Uri uri;
 
+    EditText etName, etContact;
+    FancyButton btnEditProfile, btnEditImage;
     EditText etName, etContact, etTrustedContact;
     Button btnEditProfile, btnEditImage;
     ImageView imageView;
@@ -62,6 +65,8 @@ public class EditProfileActivity extends AppCompatActivity {
         etTrustedContact = (EditText) findViewById(R.id.et_trusted_contact);
         btnEditImage = (Button) findViewById(R.id.btn_edit_image);
         btnEditProfile = (Button) findViewById(R.id.btn_edit_profile);
+        btnEditImage = (FancyButton) findViewById(R.id.btn_edit_image);
+        btnEditProfile = (FancyButton) findViewById(R.id.btn_edit_image);
 
         imageView = (ImageView) findViewById(R.id.iv_image);
 

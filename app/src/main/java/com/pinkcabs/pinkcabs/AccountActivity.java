@@ -15,9 +15,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import mehdi.sakout.fancybuttons.FancyButton;
+
 public class AccountActivity extends AppCompatActivity {
 
-    Button btnEditProf, btnLogout, btnReset, btnPanicContacts;
+    FancyButton btnEditProf, btnLogout, btnReset, btnPanicContacts;
     private static final String TAG = "AccountActivity";
 
     @Override
@@ -31,10 +33,10 @@ public class AccountActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate: hihihi");
 
-        btnEditProf = (Button) findViewById(R.id.btn_edit_prof);
-        btnLogout = (Button) findViewById(R.id.btn_logout);
-        btnReset = (Button) findViewById(R.id.btn_reset);
-        btnPanicContacts = (Button) findViewById(R.id.btn_panic_contacts);
+        btnEditProf = (FancyButton) findViewById(R.id.btn_edit_prof);
+        btnLogout = (FancyButton) findViewById(R.id.btn_logout);
+        btnReset = (FancyButton) findViewById(R.id.btn_reset);
+        btnPanicContacts = (FancyButton) findViewById(R.id.btn_panic_contacts);
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
