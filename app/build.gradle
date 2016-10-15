@@ -37,10 +37,15 @@ dependencies {
 
     compile 'com.github.florent37:materialtextfield:1.0.5'
     compile 'info.hoang8f:fbutton:1.0.5'
+
     compile 'com.android.support:appcompat-v7:23.03'
+    
+    compile 'com.android.support:appcompat-v7:23.0.3'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
 
 
     testCompile 'junit:junit:4.12'
 
+    compile 'com.android.support:design:23.0.3'
 }
 apply plugin: 'com.google.gms.google-services'
