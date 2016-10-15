@@ -80,6 +80,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         final RouteMaker rm=new RouteMaker(this);
 
+        NearbyLocator nl=new NearbyLocator(this);
+        nl.findNearbyPlacesByType(new LatLng(28.644800,77.216721),"police");
+
         try {
             final Intent placeAutoCompleteIntent=new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
             searchButton.setOnClickListener(new View.OnClickListener() {
@@ -202,3 +205,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 //AIzaSyDxdGZkc176riyJN8KfZENp5kNxHU1-Lw4  places api key
+
+// AIzaSyA9QBKcYiu3LbbAzmKuu09Xret_-hqF9wI places api web service

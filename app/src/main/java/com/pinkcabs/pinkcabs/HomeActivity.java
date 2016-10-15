@@ -13,9 +13,21 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Button track = (Button) findViewById(R.id.safetyDetails);
-        Button account = (Button) findViewById(R.id.myAccount);
-        account.setOnClickListener(new View.OnClickListener() {
+        Button btnTakeRide = (Button) findViewById(R.id.btn_take_ride);
+        Button btnMyAccount = (Button) findViewById(R.id.btn_myAccount);
+        Button btnSafety = (Button) findViewById(R.id.btn_safety_details);
+        Button btnTrack = (Button) findViewById(R.id.btn_track);
+
+        btnTakeRide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        btnMyAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),AccountActivity.class);
