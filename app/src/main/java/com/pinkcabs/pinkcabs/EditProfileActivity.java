@@ -118,7 +118,7 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void uploadPhoto(Uri uri) {
 
         Toast.makeText(this, "Uploading...", Toast.LENGTH_SHORT).show();
-        
+
         storageRef.putFile(uri)
                 .addOnSuccessListener(EditProfileActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
