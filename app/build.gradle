@@ -36,8 +36,9 @@ dependencies {
     compile 'com.google.maps.android:android-maps-utils:0.4.+'
     compile 'com.github.florent37:materialtextfield:1.0.5'
     compile 'info.hoang8f:fbutton:1.0.5'
-
+    compile 'com.txusballesteros:bubbles:1.2.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.github.medyo:fancybuttons:1.8.1'
     testCompile 'junit:junit:4.12'
 
     compile 'de.hdodenhof:circleimageview:2.1.0'

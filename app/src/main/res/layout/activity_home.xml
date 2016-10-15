@@ -5,44 +5,23 @@
     android:id="@+id/activity_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_transition"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.pinkcabs.pinkcabs.HomeActivity">
 
-    <Button
-        android:id="@+id/btn_take_ride"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:text="take ride" />
-
-    <Button
-        android:id="@+id/btn_track"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_below="@id/btn_take_ride"
-        android:text="track" />
-
-    <Button
-        android:id="@+id/btn_safety_details"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_below="@id/btn_track"
-        android:text="safety" />
-
-    <Button
-        android:id="@+id/btn_myAccount"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_below="@id/btn_safety_details"
-        android:text="account" />
-
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="400dp">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn_emergency2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="20dp"
@@ -50,24 +29,25 @@
             android:clickable="true"
             android:elevation="10dp"
             app:fabSize="normal" />
+
+        <TextView
+            android:id="@+id/txt_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="3dp"
+            android:elevation="16dp"
+            android:text="PANIC"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn_emergency1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginEnd="7dp"
-            android:clickable="true"
-            android:visibility="gone"
-            android:elevation="10dp"
-            app:fabSize="normal"  />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/btn_emergency_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="20dp"
@@ -76,5 +56,156 @@
             android:elevation="10dp"
             android:visibility="gone"
             app:fabSize="normal" />
+
+        <TextView
+            android:id="@+id/txt_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="3dp"
+            android:elevation="16dp"
+            android:text="1"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn_emergency_send"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="7dp"
+            android:clickable="true"
+            android:elevation="10dp"
+            android:visibility="gone"
+            app:fabSize="normal" />
+
+        <TextView
+            android:id="@+id/txt_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="3dp"
+            android:elevation="16dp"
+            android:text="SEND"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/btn_take_ride"
+        android:layout_width="180dp"
+        android:layout_height="60dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:layout_marginLeft="80dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        app:fb_borderColor="#FFFFFF"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="#d32f2f"
+        app:fb_focusColor="#9bd823"
+        app:fb_radius="30dp"
+        app:fb_text="TAKE RIDE"
+        app:fb_textColor="#FFFFFF" />
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/btn_track"
+        android:layout_width="180dp"
+        android:layout_marginLeft="80dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/btn_take_ride"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        app:fb_borderColor="#FFFFFF"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="#00897b"
+        app:fb_focusColor="#9bd823"
+        app:fb_radius="30dp"
+        app:fb_text="TRACK"
+        app:fb_textColor="#FFFFFF" />
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/btn_safety_details"
+        android:layout_width="180dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/btn_track"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginLeft="80dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        app:fb_borderColor="#FFFFFF"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="#2e7d32"
+        app:fb_focusColor="#9bd823"
+        app:fb_radius="30dp"
+        app:fb_text="SAFETY"
+        app:fb_textColor="#FFFFFF" />
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/btn_myAccount"
+        android:layout_width="180dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="80dp"
+        android:layout_below="@+id/btn_safety_details"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        app:fb_borderColor="#FFFFFF"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="#ff5722"
+        app:fb_focusColor="#9bd823"
+        app:fb_radius="30dp"
+        app:fb_text="ACCOUNT"
+        app:fb_textColor="#FFFFFF" />
+
+    <LinearLayout
+        android:id="@+id/linearOne"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="104dp"
+        android:background="@android:color/black"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/img_cab"
+        android:layout_width="120dp"
+        android:layout_height="150dp"
+        android:src="@drawable/imgcabtwo"
+        android:layout_above="@id/linearOne"
+        android:layout_marginBottom="-45dp"
+        android:layout_alignParentStart="true" />
+
+    <!--<de.hdodenhof.circleimageview.CircleImageView-->
+        <!--android:id="@+id/womanForCab"-->
+        <!--android:src="@drawable/womanthree"-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_above="@id/linearOne"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:layout_alignParentEnd="true" />-->
+
+
 
 </RelativeLayout>

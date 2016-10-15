@@ -22,12 +22,14 @@ import com.pinkcabs.pinkcabs.Models.FBUser;
 
 import java.io.IOException;
 
+import mehdi.sakout.fancybuttons.FancyButton;
+
 public class EditProfileActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 12341;
 
     EditText etName, etContact;
-    Button btnEditProfile, btnEditImage;
+    FancyButton btnEditProfile, btnEditImage;
     DatabaseReference mainDatabase,usersList;
 
     @Override
@@ -40,8 +42,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
         etName = (EditText) findViewById(R.id.et_name);
         etContact = (EditText) findViewById(R.id.et_contact);
-        btnEditImage = (Button) findViewById(R.id.btn_edit_image);
-        btnEditProfile = (Button) findViewById(R.id.btn_edit_image);
+        btnEditImage = (FancyButton) findViewById(R.id.btn_edit_image);
+        btnEditProfile = (FancyButton) findViewById(R.id.btn_edit_image);
 
         mainDatabase = FirebaseDatabase.getInstance().getReference();
         usersList = mainDatabase.child("users");

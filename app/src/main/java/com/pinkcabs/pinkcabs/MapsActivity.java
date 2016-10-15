@@ -49,7 +49,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String TAG = "MapsActivity";
     public static final Integer PLACE_AUTOCOMPLETE_REQUEST_CODE=2209;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,9 +149,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                                          }
                                      }
-
         );
-
     }
     StringRequest reverseGeoCodeRequestBuilder(LatLng ll){
         String basic="https://maps.googleapis.com/maps/api/geocode/json?latlng=";

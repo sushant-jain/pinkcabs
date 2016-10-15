@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class FBUser {
 
+    public static String copyName;
     String name;
     String photoId;
     String email;
@@ -19,6 +20,7 @@ public class FBUser {
     }
 
     public FBUser(String name, String photoId, String email, String contact, ArrayList<String> smsContact, ArrayList<String> trackIds) {
+        copyName = name;
         this.name = name;
         this.photoId = photoId;
         this.email = email;
