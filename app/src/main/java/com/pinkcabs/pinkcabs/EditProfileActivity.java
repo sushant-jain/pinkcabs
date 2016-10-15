@@ -33,14 +33,16 @@ import com.pinkcabs.pinkcabs.Models.FBUser;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.util.UUID;
 
+import mehdi.sakout.fancybuttons.FancyButton;
 
 public class EditProfileActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 12341;
     Uri uri;
 
+    EditText etName, etContact;
+    FancyButton btnEditProfile, btnEditImage;
     EditText etName, etContact, etTrustedContact;
     Button btnEditProfile, btnEditImage;
                     StorageReference storageRef;
@@ -62,6 +64,8 @@ public class EditProfileActivity extends AppCompatActivity {
         etTrustedContact = (EditText) findViewById(R.id.et_trusted_contact);
         btnEditImage = (Button) findViewById(R.id.btn_edit_image);
         btnEditProfile = (Button) findViewById(R.id.btn_edit_profile);
+        btnEditImage = (FancyButton) findViewById(R.id.btn_edit_image);
+        btnEditProfile = (FancyButton) findViewById(R.id.btn_edit_image);
 
         mainDatabase = FirebaseDatabase.getInstance().getReference();
         usersList = mainDatabase.child("users");
