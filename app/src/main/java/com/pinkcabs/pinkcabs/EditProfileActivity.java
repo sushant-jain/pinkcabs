@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.pinkcabs.pinkcabs.Models.FBUser;
 
 import java.io.IOException;
@@ -25,9 +27,11 @@ import java.io.IOException;
 public class EditProfileActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 12341;
+    Uri uri;
 
     EditText etName, etContact;
     Button btnEditProfile, btnEditImage;
+    boolean picChanged=false;
     DatabaseReference mainDatabase,usersList;
 
     @Override
@@ -53,6 +57,13 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 String s1 = etName.getText().toString();
                 String s2 = etContact.getText().toString();
+                if(picChanged==true)
+                {
+                    FirebaseStorage storage = FirebaseStorage.getInstance();
+                    StorageReference storageRef = storage.getReferenceFromUrl("gs://pinkcabs-90647.appspot.com/DPs");
+
+
+                }
                 FBUser fbuser = new FBUser(s2,user.getEmail(),"",s2);
                 usersList.child(user.getUid()).setValue(fbuser).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -84,12 +95,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
-            Uri uri = data.getData();
+            uri = data.getData();
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 // Log.d(TAG, String.valueOf(bitmap));
-
+                picChanged=true;
                 ImageView imageView = (ImageView) findViewById(R.id.iv_image);
                 imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
