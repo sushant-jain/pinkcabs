@@ -62,7 +62,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         etName = (EditText) findViewById(R.id.et_name);
         etContact = (EditText) findViewById(R.id.et_contact);
-        etTrustedContact = (EditText) findViewById(R.id.et_trusted_contact);
+       // etTrustedContact = (EditText) findViewById(R.id.et_trusted_contact);
         btnEditImage = (Button) findViewById(R.id.btn_edit_image);
         btnEditProfile = (Button) findViewById(R.id.btn_edit_profile);
         btnEditImage = (FancyButton) findViewById(R.id.btn_edit_image);
@@ -99,6 +99,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 String s1 = etName.getText().toString();
                 String s2 = etContact.getText().toString();
+<<<<<<< HEAD
+//                String s3 = etTrustedContact.getText().toString();
+                 FBUser fbuser = new FBUser(s2,user.getEmail(),"",s1);
+=======
                 String s3 = etTrustedContact.getText().toString();
                 FBUser fbuser = new FBUser(s1, user.getEmail(), s2, s3);
                 usersList.orderByChild("contact").equalTo(s3).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -114,6 +118,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
                     }
                 });
+>>>>>>> c629374cbc6eabe919d30dc67b405de9404f2056
                 usersList.child(user.getUid()).setValue(fbuser).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
