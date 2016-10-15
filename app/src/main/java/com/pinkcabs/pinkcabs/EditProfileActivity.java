@@ -29,9 +29,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.pinkcabs.pinkcabs.Models.FBUser;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-
 
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -41,10 +41,11 @@ public class EditProfileActivity extends AppCompatActivity {
 
     EditText etName, etContact, etTrustedContact;
     Button btnEditProfile, btnEditImage;
-                    StorageReference storageRef;
-    boolean picChanged=false;
+    ImageView imageView;
+    StorageReference storageRef;
+    boolean picChanged = false;
     private static final String TAG = "EditProfileActivity";
-    DatabaseReference mainDatabase,usersList;
+    DatabaseReference mainDatabase, usersList;
 
 
     @Override
@@ -62,6 +63,10 @@ public class EditProfileActivity extends AppCompatActivity {
         btnEditImage = (Button) findViewById(R.id.btn_edit_image);
         btnEditProfile = (Button) findViewById(R.id.btn_edit_profile);
 
+        imageView = (ImageView) findViewById(R.id.iv_image);
+
+        
+
         usersList.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -78,8 +83,8 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
 
-                    FirebaseStorage storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReferenceFromUrl("gs://pinkcabs-90647.appspot.com/DPs/"+user.getUid());
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReferenceFromUrl("gs://pinkcabs-90647.appspot.com/DPs/" + user.getUid());
 
 
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +95,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 String s1 = etName.getText().toString();
                 String s2 = etContact.getText().toString();
                 String s3 = etTrustedContact.getText().toString();
-                FBUser fbuser = new FBUser(s1,user.getEmail(),s2,s3);
+                FBUser fbuser = new FBUser(s1, user.getEmail(), s2, s3);
                 usersList.orderByChild("contact").equalTo(s3).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -107,7 +112,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 usersList.child(user.getUid()).setValue(fbuser).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Intent intent =new Intent(getApplicationContext(),AccountActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
                         startActivity(intent);
                     }
                 });
@@ -140,7 +145,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                ImageView imageView = (ImageView) findViewById(R.id.iv_image);
 //                Picasso.with(EditProfileActivity.this).load(uri.getPath())
 //                        //.resize(100,100)
 //                        .into(imageView);
