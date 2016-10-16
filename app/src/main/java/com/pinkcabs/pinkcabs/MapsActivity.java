@@ -55,6 +55,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ServerRequests serverRequestsGetAllDrivers,serverRequestBookDriver;
     Location myLocation;
     String minDriverId;
+    GeoCoder geoCoder;
     private static final String TAG = "MapsActivity";
     public static final Integer PLACE_AUTOCOMPLETE_REQUEST_CODE = 2209;
     FirebaseUser user;
@@ -68,7 +69,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
+        geoCoder=new GeoCoder(this);
+        geoCoder.setReverseGeoCodeListener(new GeoCoder.ReverseGeoCodeResponseListener() {
+            @Override
+            public void useAddress(String address) {
+                tvGeoCode.setText(address);
+            }
+        });
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         serverRequestsGetAllDrivers =new ServerRequests();
@@ -209,6 +216,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                              marker.setPosition(center);
                                              // rq.add(reverseGeoCodeRequestBuilder(center));
                                              //rm.findPath(sydney,center);
+                                             //geoCoder.reverseGeoCode(center);
 
                                          }
                                      }
@@ -260,7 +268,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if(mLastLocation!=null){
             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude())));
-            mMap.moveCamera(CameraUpdateFactory.zoomIn());
+            //mMap.moveCamera(CameraUpdateFactory.zoomBy(7));
         }
     }
 
