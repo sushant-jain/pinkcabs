@@ -67,15 +67,21 @@ public class EditProfileActivity extends AppCompatActivity {
 
         imageView = (ImageView) findViewById(R.id.iv_image);
 
-        
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReferenceFromUrl("gs://pinkcabs-90647.appspot.com/DPs/" + user.getUid());
+
 
         usersList.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                FBUser fbuser = dataSnapshot.getValue(FBUser.class);
-                etName.setText(fbuser.getName());
-                etContact.setText(fbuser.getContact());
-                etTrustedContact.setText(fbuser.getTrustedContact());
+                if (dataSnapshot.exists()) {
+                    FBUser fbuser = dataSnapshot.getValue(FBUser.class);
+
+                    etName.setText(fbuser.getName());
+                    etContact.setText(fbuser.getContact());
+                    etTrustedContact.setText(fbuser.getTrustedContact());
+                    Picasso.with(EditProfileActivity.this).load(storageRef.getDownloadUrl().toString()).into(imageView);
+                }
             }
 
             @Override
@@ -84,9 +90,6 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReferenceFromUrl("gs://pinkcabs-90647.appspot.com/DPs/" + user.getUid());
 
 
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
