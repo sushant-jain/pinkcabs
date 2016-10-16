@@ -40,7 +40,7 @@ public class LocationUpdate extends Service {
                 ServerRequests requests = new ServerRequests();
 
                 Log.d(TAG, "onLocationChanged: "+location.getLatitude());
-                requests.updateMyLocation(getApplicationContext(),"sample_id"/* user.getUid()*/,
+                requests.updateMyLocation(getApplicationContext(),user.getUid(),
                         location.getLatitude(), location.getLongitude());
             }
 
