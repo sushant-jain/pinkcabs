@@ -66,6 +66,9 @@ public class EditProfileActivity extends AppCompatActivity {
         btnEditProfile = (Button) findViewById(R.id.btn_edit_profile);
         btnEditImage = (FancyButton) findViewById(R.id.btn_edit_image);
         btnEditProfile = (FancyButton) findViewById(R.id.btn_edit_image);
+        etTrustedContact = (EditText) findViewById(R.id.et_trusted_contact);
+        btnEditImage = (Button) findViewById(R.id.btn_edit_image);
+        btnEditProfile = (Button) findViewById(R.id.btn_edit_profile);
 
         mainDatabase = FirebaseDatabase.getInstance().getReference();
         usersList = mainDatabase.child("users");
