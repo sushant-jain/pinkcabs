@@ -113,7 +113,7 @@ public class ServerRequests {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                       // if (callback!=null) callback.response(null);
+                        if (callback!=null) callback.response(null);
                         Log.d(TAG, "onErrorResponse: "+error.getMessage());
                     }
                 }
@@ -193,7 +193,7 @@ public class ServerRequests {
         Volley.newRequestQueue(ctx).add(req);
     }
 
-    void updateMyLocation(Context ctx, String userFirebaseId, double latitude, double longitude) {
+    void updateMyLocation(Context ctx, String userFirebaseId, final double latitude, final double longitude) {
         StringRequest req=new StringRequest(
                 Request.Method.PUT,
                 UPDATE_MY_LOCATION.replace("_USER_FIRE_ID_", userFirebaseId),
@@ -214,7 +214,15 @@ public class ServerRequests {
                         if (callback!=null) callback.response(null);
                     }
                 }
-        );
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> map=new HashMap<>();
+                map.put("latitude", String.valueOf(latitude));
+                map.put("longitude", String.valueOf(longitude));
+                return map;
+            }
+        };
         Volley.newRequestQueue(ctx).add(req);
     }
 

@@ -24,6 +24,7 @@ public class EntryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry);
 
+        startService(new Intent(this,LocationUpdate.class));
         de.hdodenhof.circleimageview.CircleImageView womanWait = (CircleImageView) findViewById(R.id.womanForCab);
         ImageView cab = (ImageView) findViewById(R.id.img_cab);
         Animation animation2 = AnimationUtils.loadAnimation(EntryActivity.this, R.anim.movers);
