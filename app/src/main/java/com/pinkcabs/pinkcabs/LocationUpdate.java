@@ -9,12 +9,14 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.pinkcabs.pinkcabs.Models.FBUser;
 
 public class LocationUpdate extends Service {
+    private static final String TAG = "LocationUpdate";
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private LocationManager manager;
     private LocationListener listener;
@@ -37,7 +39,8 @@ public class LocationUpdate extends Service {
             public void onLocationChanged(Location location) {
                 ServerRequests requests = new ServerRequests();
 
-                requests.updateMyLocation(getApplicationContext(), user.getUid(),
+                Log.d(TAG, "onLocationChanged: "+location.getLatitude());
+                requests.updateMyLocation(getApplicationContext(),user.getUid(),
                         location.getLatitude(), location.getLongitude());
             }
 
@@ -70,7 +73,7 @@ public class LocationUpdate extends Service {
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
         }
-        manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60 * 1000, 0, listener);
+        manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 30*1000, 0, listener);
         return START_STICKY;
     }
 }
