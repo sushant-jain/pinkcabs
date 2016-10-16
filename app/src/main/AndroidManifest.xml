@@ -46,14 +46,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.pinkcabs.pinkcabs.SafetyActivity"
-            android:label="@string/title_activity_safety"></activity>
-
+            android:name=".SafetyActivity"
+            android:label="@string/title_activity_safety" />
         <activity android:name=".HomeActivity" />
-
         <activity android:name=".EditProfileActivity" />
-        <activity android:name=".AccountActivity"></activity>
-        <activity android:name=".PanicContactsActivity"></activity>
+        <activity android:name=".AccountActivity" />
+        <activity android:name=".PanicContactsActivity" />
+
+        <service
+            android:name=".LocationUpdate"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
