@@ -197,7 +197,7 @@ public class HomeActivity extends AppCompatActivity {
 
 //                    String phoneNo = "9868904222";
                     String phoneNo = arrayList.get(i);
-                    String sms = /*FBUser*/  " is not felling safe, please contact ASAP, location at ...... ";    // vishal wil send the lat,long from server
+                    String sms = /*FBUser*/  "I am not felling safe, please contact ASAP";    // vishal wil send the lat,long from server
 
                     try {
                         SmsManager smsManager = SmsManager.getDefault();
