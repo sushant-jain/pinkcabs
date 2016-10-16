@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -44,6 +45,8 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import mehdi.sakout.fancybuttons.FancyButton;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -51,12 +54,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     TextView tvGeoCode;
     RequestQueue rq;
     GoogleApiClient mGoogleApiClient = null;
-    Button searchButton;
+    FancyButton searchButton;
     ServerRequests serverRequestsGetAllDrivers,serverRequestBookDriver;
     Location myLocation;
     String minDriverId;
+    GeoCoder geoCoder;
     private static final String TAG = "MapsActivity";
     public static final Integer PLACE_AUTOCOMPLETE_REQUEST_CODE = 2209;
+    public FloatingActionButton bookCab;
     FirebaseUser user;
 
     @Override
@@ -68,6 +73,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        geoCoder=new GeoCoder(this);
+        geoCoder.setReverseGeoCodeListener(new GeoCoder.ReverseGeoCodeResponseListener() {
+            @Override
+            public void useAddress(String address) {
+                tvGeoCode.setText(address);
+            }
+        });
+        bookCab = (FloatingActionButton) findViewById(R.id.book_cab);        // susi use this to book cab
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -116,11 +129,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         rq = Volley.newRequestQueue(this);
         tvGeoCode = (TextView) findViewById(R.id.tv_geocode);
-        searchButton = (Button) findViewById(R.id.btn_search);
+        searchButton = (FancyButton) findViewById(R.id.btn_search);
 
     }
 
-
+     RouteMaker rm;
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -133,7 +146,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        final RouteMaker rm = new RouteMaker(this);
+
+        rm = new RouteMaker(this);
 
 //        NearbyLocator nl=new NearbyLocator(this);
 //        nl.findNearbyPlacesByType(new LatLng(28.644800,77.216721),"police");  //just some dummy testing code
@@ -200,7 +214,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         mMap.setMyLocationEnabled(true);
         final Marker marker = mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney").draggable(true));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mMap.getMyLocation().getLatitude(),mMap.getMyLocation().getLongitude())));
         mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
                                          @Override
                                          public void onCameraMove() {
@@ -222,6 +236,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()));
                 Log.d(TAG, "Place:" + place.toString());
+                if(myLocation!=null){
+                    rm.findPath(new LatLng(myLocation.getLatitude(),myLocation.getLongitude()),place.getLatLng());
+                }
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 Log.d(TAG, status.getStatusMessage());
@@ -252,6 +269,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, createLocationRequest(), this);
+
+        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if(mLastLocation!=null){
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude())));
+            //mMap.moveCamera(CameraUpdateFactory.zoomBy(7));
+        }
     }
 
     @Override

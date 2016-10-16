@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -29,7 +30,10 @@ public class SafetyActivity extends FragmentActivity implements OnMapReadyCallba
     Location mLastLocation;
     NearbyLocator nearbyLocator;
     RouteMaker rm;
+    SupportMapFragment mapFragment;
     TextView tvpolName, tvpolAddress, tvpolContact, tvpolDis, tvpolTime, tvhospName, tvhospAddress, tvhospContact, tvhospDis, tvhospTime;
+
+    private static final String TAG = "SafetyActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,8 @@ public class SafetyActivity extends FragmentActivity implements OnMapReadyCallba
         tvhospTime = (TextView) findViewById(R.id.tv_hosp_time);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mMap=null;
@@ -64,7 +69,11 @@ public class SafetyActivity extends FragmentActivity implements OnMapReadyCallba
 
             @Override
             public void getDistanceString(String distance) {
-
+                if(tvpolDis.getText()==""){
+                    tvpolDis.setText(distance);
+                }else{
+                    tvhospDis.setText(distance);
+                }
             }
 
             @Override
@@ -74,7 +83,11 @@ public class SafetyActivity extends FragmentActivity implements OnMapReadyCallba
 
             @Override
             public void getTimeString(String time) {
-
+                if(tvpolTime.getText()=="null"){
+                    tvpolTime.setText(time);
+                }else{
+                    tvhospTime.setText(time);
+                }
             }
 
             @Override
@@ -105,17 +118,30 @@ public class SafetyActivity extends FragmentActivity implements OnMapReadyCallba
         nearbyLocator.setOnPlaceDetailResultReceivedListener(new NearbyLocator.OnPlaceDetailResultReceivedListener() {
             @Override
             public void useAddress(String address) {
-
+                if(tvpolAddress.getText()==""){
+                    tvpolAddress.setText(address);
+                }else{
+                    tvhospAddress.setText(address);
+                }
             }
 
             @Override
             public void usePhone(String phone) {
-
+                Log.d(TAG, "usePhone: phone="+phone);
+                if(tvpolContact.getText()==""){
+                    tvpolContact.setText(phone);
+                }else{
+                    tvhospContact.setText(phone);
+                }
             }
 
             @Override
             public void useName(String name) {
-
+                if(tvpolName.getText()==""){
+                    tvpolName.setText(name);
+                }else{
+                    tvhospName.setText(name);
+                }
             }
         });
 
@@ -186,6 +212,7 @@ public class SafetyActivity extends FragmentActivity implements OnMapReadyCallba
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
             if(mMap!=null){
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude())));
                 LatLng mahLocationLL=new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(mahLocationLL));
                 nearbyLocator.findNearbyPlacesByType(mahLocationLL,"police");
