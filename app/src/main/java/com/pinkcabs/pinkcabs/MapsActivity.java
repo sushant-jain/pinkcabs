@@ -52,6 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     TextView tvGeoCode;
+    String driverFirebaseId;
     RequestQueue rq;
     GoogleApiClient mGoogleApiClient = null;
     FancyButton searchButton;
@@ -81,7 +82,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
         bookCab = (FloatingActionButton) findViewById(R.id.book_cab);        // susi use this to book cab
-
+        bookCab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: minDriverId"+minDriverId);
+                if(minDriverId==null){
+                    Toast.makeText(MapsActivity.this, "Error! Try Again", Toast.LENGTH_SHORT).show();
+                }else {
+                    driverFirebaseId=minDriverId;
+                    serverRequestBookDriver.selectDriver(MapsActivity.this, minDriverId, "sample_id"/*user.getUid()*/);
+                }
+            }
+        });
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         serverRequestsGetAllDrivers =new ServerRequests();
@@ -98,6 +110,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     for(int i=0;i<jArrayDriverList.length();i++){
                         jObjDriver=jArrayDriverList.getJSONObject(i);
                         Log.d(TAG, "response: Driverid"+jObjDriver.getInt("dID"));
+                        Log.d(TAG, "response: lat"+jObjDriver.getDouble("latitude"));
+                        mMap.addMarker(new MarkerOptions().position(new LatLng(jObjDriver.getDouble("latitude"),jObjDriver.getDouble("longitude"))).title("Taxi "+i));
                         if((distance=SphericalUtil.computeDistanceBetween(new LatLng(myLocation.getLatitude(),myLocation.getLongitude()),
                                 new LatLng(jObjDriver.getDouble("latitude"),jObjDriver.getDouble("longitude"))))<minDistance){
                                     minDistance=distance;
@@ -158,12 +172,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 @Override
                 public void onClick(View v) {
                     startActivityForResult(placeAutoCompleteIntent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-                    Log.d(TAG, "onClick: minDriverId"+minDriverId);
-                    if(minDriverId==null){
-                        Toast.makeText(MapsActivity.this, "Error! Try Again", Toast.LENGTH_SHORT).show();
-                    }else {
-                        serverRequestBookDriver.selectDriver(MapsActivity.this, minDriverId, "sample_id"/*user.getUid()*/);
-                    }
+
                 }
             });
         } catch (GooglePlayServicesRepairableException e) {
