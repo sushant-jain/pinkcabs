@@ -120,7 +120,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
+     RouteMaker rm;
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -133,7 +133,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        final RouteMaker rm = new RouteMaker(this);
+
+        rm = new RouteMaker(this);
 
 //        NearbyLocator nl=new NearbyLocator(this);
 //        nl.findNearbyPlacesByType(new LatLng(28.644800,77.216721),"police");  //just some dummy testing code
@@ -200,7 +201,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         mMap.setMyLocationEnabled(true);
         final Marker marker = mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney").draggable(true));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mMap.getMyLocation().getLatitude(),mMap.getMyLocation().getLongitude())));
         mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
                                          @Override
                                          public void onCameraMove() {
@@ -222,6 +223,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()));
                 Log.d(TAG, "Place:" + place.toString());
+                if(myLocation!=null){
+                    rm.findPath(new LatLng(myLocation.getLatitude(),myLocation.getLongitude()),place.getLatLng());
+                }
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 Log.d(TAG, status.getStatusMessage());
@@ -252,6 +256,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, createLocationRequest(), this);
+
+        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if(mLastLocation!=null){
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude())));
+            mMap.moveCamera(CameraUpdateFactory.zoomIn());
+        }
     }
 
     @Override
