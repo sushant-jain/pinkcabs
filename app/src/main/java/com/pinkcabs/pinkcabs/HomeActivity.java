@@ -1,10 +1,15 @@
 package com.pinkcabs.pinkcabs;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.TransitionDrawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -49,6 +54,7 @@ public class HomeActivity extends AppCompatActivity {
     public RelativeLayout activityHome;
     public static ArrayList<String> arrayList = new ArrayList<>();
 
+    private static final String TAG = "HomeActivity";
     //  private BubblesManager bubblesManager;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -59,12 +65,19 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        new ServerRequests().newUser(getApplicationContext(),user.getUid());
+        startService(new Intent(getApplicationContext(),LocationUpdate.class));
+        Log.d(TAG, "onDataChange: "+user.getUid());
+
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists()){
+                if (!dataSnapshot.exists()) {
+
+
                     Intent intent = new Intent(HomeActivity.this,EditProfileActivity.class);
+
                     startActivity(intent);
                 }
             }

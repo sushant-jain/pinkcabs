@@ -2,6 +2,8 @@ package com.pinkcabs.pinkcabs;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -63,6 +65,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String TAG = "MapsActivity";
     public static final Integer PLACE_AUTOCOMPLETE_REQUEST_CODE = 2209;
     public FloatingActionButton bookCab;
+    public FloatingActionButton endRide;
     FirebaseUser user;
 
     @Override
@@ -94,17 +97,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         });
+        endRide = (FloatingActionButton) findViewById(R.id.end_ride);
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        serverRequestsGetAllDrivers =new ServerRequests();
+        endRide.setBackgroundTintList(
+                ColorStateList.valueOf(Color.parseColor("#d50000"))
+        );
+
+        serverRequestsGetAllDrivers = new ServerRequests();
         serverRequestsGetAllDrivers.setCallback(new ServerRequests.RequestCallback() {
             @Override
             public void response(Object data) {
                 //JSONObject jObjResponse= (JSONObject) data;
-                if (data==null) return;
+                if (data == null) return;
                 try {
                     //JSONArray jArrayDriverList=jObjResponse.getJSONArray("driver_list");
-                    JSONArray jArrayDriverList= (JSONArray) data;
+                    JSONArray jArrayDriverList = (JSONArray) data;
                     JSONObject jObjDriver;
                     Double distance,minDistance=10000000000000000000000000000000000000000.0;
                     for(int i=0;i<jArrayDriverList.length();i++){
@@ -125,7 +133,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        serverRequestBookDriver=new ServerRequests();
+        serverRequestBookDriver = new ServerRequests();
         serverRequestBookDriver.setCallback(new ServerRequests.RequestCallback() {
             @Override
             public void response(Object data) {
@@ -145,9 +153,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         tvGeoCode = (TextView) findViewById(R.id.tv_geocode);
         searchButton = (FancyButton) findViewById(R.id.btn_search);
 
+        bookCab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                bookCab.setVisibility(View.GONE);
+//                endRide.setVisibility(View.VISIBLE);
+            }
+        });
+
+        endRide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                new ServerRequests().releaseDriver(MapsActivity.this,driverFirebaseId);
+//                endRide.setVisibility(View.GONE);
+//                bookCab.setVisibility(View.VISIBLE);
+            }
+        });
+
     }
 
-     RouteMaker rm;
+    RouteMaker rm;
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -173,6 +199,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 public void onClick(View v) {
                     startActivityForResult(placeAutoCompleteIntent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
 
+                    Log.d(TAG, "onClick: minDriverId" + minDriverId);
+                    if (minDriverId == null) {
+                        Toast.makeText(MapsActivity.this, "Error! Try Again", Toast.LENGTH_SHORT).show();
+                    } else {
+                        serverRequestBookDriver.selectDriver(MapsActivity.this, minDriverId, "sample_id"/*user.getUid()*/);
+                    }
                 }
             });
         } catch (GooglePlayServicesRepairableException e) {
@@ -245,8 +277,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getAddress().toString()));
                 Log.d(TAG, "Place:" + place.toString());
-                if(myLocation!=null){
-                    rm.findPath(new LatLng(myLocation.getLatitude(),myLocation.getLongitude()),place.getLatLng());
+                if (myLocation != null) {
+                    rm.findPath(new LatLng(myLocation.getLatitude(), myLocation.getLongitude()), place.getLatLng());
                 }
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
@@ -301,7 +333,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onPause() {
         super.onPause();
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,this);
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
     }
 
     @Override
@@ -316,10 +348,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onLocationChanged(Location mahLocation) {
-        if(mMap!=null){
-            myLocation=mahLocation;
-            Log.d(TAG, "onLocationChanged: "+mahLocation.getLatitude()+mahLocation.getLongitude());
-            serverRequestsGetAllDrivers.getCabsWithin6(this,mahLocation.getLatitude(),mahLocation.getLongitude());
+        if (mMap != null) {
+            myLocation = mahLocation;
+            Log.d(TAG, "onLocationChanged: " + mahLocation.getLatitude() + mahLocation.getLongitude());
+            serverRequestsGetAllDrivers.getCabsWithin6(this, mahLocation.getLatitude(), mahLocation.getLongitude());
             //serverRequestsGetAllDrivers.getAllCabs(this);
         }
     }
