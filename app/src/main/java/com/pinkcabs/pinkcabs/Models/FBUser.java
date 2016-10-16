@@ -8,32 +8,31 @@ import java.util.ArrayList;
 
 public class FBUser {
 
-    public static String copyName;
     String name;
-    String photoId;
+
     String email;
     String contact;
-    ArrayList<String> smsContact;
-    ArrayList<String> trackIds;
+
+    String trustedContact;
 
     public FBUser() {
     }
 
-    public FBUser(String name, String photoId, String email, String contact, ArrayList<String> smsContact, ArrayList<String> trackIds) {
-        copyName = name;
+    public FBUser(String name, String email, String contact, String trustedContact) {
         this.name = name;
-        this.photoId = photoId;
+
         this.email = email;
         this.contact = contact;
-        this.smsContact = smsContact;
-        this.trackIds = trackIds;
+        this.trustedContact = trustedContact;
     }
 
-    public FBUser(String contact, String email, String photoId, String name) {
-        this.contact = contact;
-        this.email = email;
-        this.photoId = photoId;
-        this.name = name;
+
+    public String getTrustedContact() {
+        return trustedContact;
+    }
+
+    public void setTrustedContact(String trustedContact) {
+        this.trustedContact = trustedContact;
     }
 
     public String getName() {
@@ -44,13 +43,6 @@ public class FBUser {
         this.name = name;
     }
 
-    public String getPhotoId() {
-        return photoId;
-    }
-
-    public void setPhotoId(String photoId) {
-        this.photoId = photoId;
-    }
 
     public String getEmail() {
         return email;
@@ -68,19 +60,5 @@ public class FBUser {
         this.contact = contact;
     }
 
-    public ArrayList<String> getSmsContact() {
-        return smsContact;
-    }
 
-    public void setSmsContact(ArrayList<String> smsContact) {
-        this.smsContact = smsContact;
-    }
-
-    public ArrayList<String> getTrackIds() {
-        return trackIds;
-    }
-
-    public void setTrackIds(ArrayList<String> trackIds) {
-        this.trackIds = trackIds;
-    }
 }
