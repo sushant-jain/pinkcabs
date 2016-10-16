@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -44,6 +45,8 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import mehdi.sakout.fancybuttons.FancyButton;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -51,13 +54,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     TextView tvGeoCode;
     RequestQueue rq;
     GoogleApiClient mGoogleApiClient = null;
-    Button searchButton;
+    FancyButton searchButton;
     ServerRequests serverRequestsGetAllDrivers,serverRequestBookDriver;
     Location myLocation;
     String minDriverId;
     GeoCoder geoCoder;
     private static final String TAG = "MapsActivity";
     public static final Integer PLACE_AUTOCOMPLETE_REQUEST_CODE = 2209;
+    public FloatingActionButton bookCab;
     FirebaseUser user;
 
     @Override
@@ -76,6 +80,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 tvGeoCode.setText(address);
             }
         });
+        bookCab = (FloatingActionButton) findViewById(R.id.book_cab);        // susi use this to book cab
+
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         serverRequestsGetAllDrivers =new ServerRequests();
@@ -123,7 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         rq = Volley.newRequestQueue(this);
         tvGeoCode = (TextView) findViewById(R.id.tv_geocode);
-        searchButton = (Button) findViewById(R.id.btn_search);
+        searchButton = (FancyButton) findViewById(R.id.btn_search);
 
     }
 
@@ -216,7 +222,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                              marker.setPosition(center);
                                              // rq.add(reverseGeoCodeRequestBuilder(center));
                                              //rm.findPath(sydney,center);
-                                             //geoCoder.reverseGeoCode(center);
 
                                          }
                                      }

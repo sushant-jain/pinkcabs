@@ -47,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
     public TextView txt_one;
     public TextView txt_send;
     public RelativeLayout activityHome;
+    public static ArrayList<String> arrayList = new ArrayList<>();
 
     //  private BubblesManager bubblesManager;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -110,7 +111,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 findViewById(R.id.btn_emergency2);
 
-        final ArrayList<String> arrayList = new ArrayList<>();
+//        final ArrayList<String> arrayList = new ArrayList<>();
         mainDatabase = FirebaseDatabase.getInstance().getReference();
         mainDatabase.child("panic_contacts").child(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
@@ -188,6 +189,8 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 emergency_two.setVisibility(View.GONE);
                 emergency_one.setVisibility(View.VISIBLE);
+                txt_two.setVisibility(View.GONE);
+                txt_one.setVisibility(View.VISIBLE);
             }
         });
 
@@ -196,6 +199,8 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 emergency_one.setVisibility(View.GONE);
                 emergency_send.setVisibility(View.VISIBLE);
+                txt_one.setVisibility(View.GONE);
+                txt_send.setVisibility(View.VISIBLE);
             }
         });
 
@@ -205,24 +210,30 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String phoneNo = "9868904222";
-                String sms = /*FBUser*/  " is not felling safe, please contact ASAP, location at ...... ";    // vishal wil send the lat,long from server
+                for(int i=0;i<arrayList.size();i++) {
 
-                try {
-                    SmsManager smsManager = SmsManager.getDefault();
-                    smsManager.sendTextMessage(phoneNo, null, sms, null, null);
-                    Toast.makeText(getApplicationContext(), "SMS Sent!",
-                            Toast.LENGTH_LONG).show();
+//                    String phoneNo = "9868904222";
+                    String phoneNo = arrayList.get(i);
+                    String sms = /*FBUser*/  "I am not felling safe, please contact ASAP";    // vishal wil send the lat,long from server
 
-                    emergency_two.setVisibility(View.VISIBLE);
-                    emergency_one.setVisibility(View.GONE);
-                    emergency_send.setVisibility(View.GONE);
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(),
-                            "SMS failed, please try again in a moment!",
-                            Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
+                    try {
+                        SmsManager smsManager = SmsManager.getDefault();
+                        smsManager.sendTextMessage(phoneNo, null, sms, null, null);
+                        Toast.makeText(getApplicationContext(), "SMS Sent!",
+                                Toast.LENGTH_LONG).show();
+
+                        emergency_two.setVisibility(View.VISIBLE);
+                        emergency_one.setVisibility(View.GONE);
+                        emergency_send.setVisibility(View.GONE);
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(),
+                                "SMS failed, please try again in a moment!",
+                                Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
                 }
+                txt_send.setVisibility(View.GONE);
+                txt_two.setVisibility(View.VISIBLE);
             }
         });
 
