@@ -26,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.pinkcabs.pinkcabs.Models.PanicContact;
 
 import java.util.ArrayList;
@@ -56,6 +57,22 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid());
+        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()){
+                    Intent intent = new Intent(HomeActivity.this,EditProfileActivity.class);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         activityHome = (RelativeLayout) findViewById(R.id.activity_home);
         TransitionDrawable transition = (TransitionDrawable) activityHome.getBackground();
