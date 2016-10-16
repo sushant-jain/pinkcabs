@@ -16,14 +16,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="150dp"
-        android:layout_marginTop="400dp">
+        android:layout_marginTop="420dp">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn_emergency2"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
             android:layout_marginBottom="20dp"
             android:layout_marginEnd="7dp"
             android:clickable="true"

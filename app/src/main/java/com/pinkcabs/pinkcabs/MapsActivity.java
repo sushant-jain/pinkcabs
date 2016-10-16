@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -57,6 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String minDriverId;
     private static final String TAG = "MapsActivity";
     public static final Integer PLACE_AUTOCOMPLETE_REQUEST_CODE = 2209;
+    public FloatingActionButton bookCab;
     FirebaseUser user;
 
     @Override
@@ -68,6 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        bookCab = (FloatingActionButton) findViewById(R.id.book_cab);        // susi use this to book cab
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
