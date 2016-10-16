@@ -158,7 +158,8 @@ public class ServerRequests {
         Volley.newRequestQueue(ctx).add(req);
     }
 
-    void newUser(Context ctx, final String userFirebaseId, final double latitude, final double longitude) {
+    void newUser(Context ctx, final String userFirebaseId) {
+        Log.d(TAG, "newUser: "+userFirebaseId);
         StringRequest req=new StringRequest(
                 Request.Method.POST,
                 NEW_USER,
@@ -166,6 +167,7 @@ public class ServerRequests {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            Log.d(TAG, "onResponse: "+response);
                             JSONObject jsonObject = new JSONObject(response);
                             if (callback!=null) callback.response(jsonObject);
                         } catch (JSONException e) {
@@ -176,19 +178,22 @@ public class ServerRequests {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG, "onErrorResponse: "+error.getMessage());
                         if (callback!=null) callback.response(null);
                     }
                 }
         ){
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String,String> map=new HashMap<>();
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> map=new HashMap<>();
                 map.put("user_fireb_id",userFirebaseId);
-                map.put("latitude", String.valueOf(latitude));
-                map.put("longitude", String.valueOf(longitude));
                 return map;
             }
 
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
         };
         Volley.newRequestQueue(ctx).add(req);
     }

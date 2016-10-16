@@ -47,6 +47,8 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import mehdi.sakout.fancybuttons.FancyButton;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -54,10 +56,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     TextView tvGeoCode;
     RequestQueue rq;
     GoogleApiClient mGoogleApiClient = null;
-    Button searchButton;
-    ServerRequests serverRequestsGetAllDrivers, serverRequestBookDriver;
+    FancyButton searchButton;
+    ServerRequests serverRequestsGetAllDrivers,serverRequestBookDriver;
     Location myLocation;
     String minDriverId;
+    GeoCoder geoCoder;
     private static final String TAG = "MapsActivity";
     public static final Integer PLACE_AUTOCOMPLETE_REQUEST_CODE = 2209;
     public FloatingActionButton bookCab;
@@ -73,6 +76,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        geoCoder=new GeoCoder(this);
+        geoCoder.setReverseGeoCodeListener(new GeoCoder.ReverseGeoCodeResponseListener() {
+            @Override
+            public void useAddress(String address) {
+                tvGeoCode.setText(address);
+            }
+        });
         bookCab = (FloatingActionButton) findViewById(R.id.book_cab);        // susi use this to book cab
         endRide = (FloatingActionButton) findViewById(R.id.end_ride);
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -126,7 +136,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         rq = Volley.newRequestQueue(this);
         tvGeoCode = (TextView) findViewById(R.id.tv_geocode);
-        searchButton = (Button) findViewById(R.id.btn_search);
+        searchButton = (FancyButton) findViewById(R.id.btn_search);
 
         bookCab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +149,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         endRide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
 
@@ -284,9 +294,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, createLocationRequest(), this);
 
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mLastLocation != null) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude())));
-            mMap.moveCamera(CameraUpdateFactory.zoomIn());
+        if(mLastLocation!=null){
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude())));
+            //mMap.moveCamera(CameraUpdateFactory.zoomBy(7));
         }
     }
 
