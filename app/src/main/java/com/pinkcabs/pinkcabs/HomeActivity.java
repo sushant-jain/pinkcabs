@@ -47,7 +47,7 @@ public class HomeActivity extends AppCompatActivity {
     public TextView txt_send;
     public RelativeLayout activityHome;
 
-//    private BubblesManager bubblesManager;
+    //  private BubblesManager bubblesManager;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     DatabaseReference mainDatabase;
@@ -57,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        activityHome = (RelativeLayout) findViewById(R.id.activity_home);
         TransitionDrawable transition = (TransitionDrawable) activityHome.getBackground();
         transition.startTransition(2000);
 
@@ -123,7 +124,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-
         emergency_two = (FloatingActionButton) findViewById(R.id.btn_emergency2);
         emergency_two.setBackgroundTintList(
                 ColorStateList.valueOf(Color.parseColor("#27ae60"))
@@ -144,22 +144,19 @@ public class HomeActivity extends AppCompatActivity {
         emergency_send.setBackgroundTintList(
                 ColorStateList.valueOf(Color.parseColor("#d50000"))
         );
-
-        FancyButton track = (FancyButton) findViewById(R.id.btn_safety_details);
+        FancyButton track = (FancyButton) findViewById(R.id.btn_track);
         FancyButton account = (FancyButton) findViewById(R.id.btn_myAccount);
+        FancyButton btnSafety = (FancyButton) findViewById(R.id.btn_safety_details);
+        FancyButton btnTakeRide = (FancyButton) findViewById(R.id.btn_take_ride);
         account.setOnClickListener(new View.OnClickListener()
 
-                                   {
-                                       @Override
-                                       public void onClick(View view) {
-                                           Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
-                                           startActivity(intent);
-                                       }
-                                   }
-        Button track = (Button) findViewById(R.id.btn_track);
-        Button account = (Button) findViewById(R.id.btn_myAccount);
-        Button btnSafety = (Button) findViewById(R.id.btn_safety_details);
-        Button btnTakeRide = (Button) findViewById(R.id.btn_take_ride);
+        {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
+                startActivity(intent);
+            }
+        });
 
         account.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,22 +182,20 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        );
-
         emergency_send.setOnClickListener(new View.OnClickListener()
 
-                                          {
-                                              @Override
-                                              public void onClick(View v) {
+        {
+            @Override
+            public void onClick(View v) {
 
-                                                  String phoneNo = "9868904222";
-                                                  String sms = FBUser.copyName + " is not felling safe, please contact ASAP, location at ...... ";    // vishal wil send the lat,long from server
+                String phoneNo = "9868904222";
+                String sms = /*FBUser*/  " is not felling safe, please contact ASAP, location at ...... ";    // vishal wil send the lat,long from server
 
-                                                  try {
-                                                      SmsManager smsManager = SmsManager.getDefault();
-                                                      smsManager.sendTextMessage(phoneNo, null, sms, null, null);
-                                                      Toast.makeText(getApplicationContext(), "SMS Sent!",
-                                                              Toast.LENGTH_LONG).show();
+                try {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage(phoneNo, null, sms, null, null);
+                    Toast.makeText(getApplicationContext(), "SMS Sent!",
+                            Toast.LENGTH_LONG).show();
 
                     emergency_two.setVisibility(View.VISIBLE);
                     emergency_one.setVisibility(View.GONE);
@@ -217,7 +212,7 @@ public class HomeActivity extends AppCompatActivity {
         btnTakeRide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                 startActivity(intent);
             }
         });
@@ -226,27 +221,14 @@ public class HomeActivity extends AppCompatActivity {
         btnSafety.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),SafetyActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SafetyActivity.class);
                 startActivity(intent);
             }
         });
-                                                      emergency_two.setVisibility(View.VISIBLE);
-                                                      emergency_one.setVisibility(View.GONE);
-                                                      emergency_send.setVisibility(View.GONE);
-                                                  } catch (Exception e) {
-                                                      Toast.makeText(getApplicationContext(),
-                                                              "SMS failed, please try again in a moment!",
-                                                              Toast.LENGTH_LONG).show();
-                                                      e.printStackTrace();
-                                                  }
-                                              }
-                                          }
-
-        );
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
+        emergency_two.setVisibility(View.VISIBLE);
+        emergency_one.setVisibility(View.GONE);
+        emergency_send.setVisibility(View.GONE);
     }
 }
+
+

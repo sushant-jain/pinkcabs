@@ -1,6 +1,7 @@
 package com.pinkcabs.pinkcabs;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -31,6 +32,7 @@ public class ServerRequests {
     private String RELEASE_A_DRIVER="http://198.199.120.41/pinkcabs/v1/driver/_DRV_FIREID_/release";
     private String UPDATE_MY_LOCATION="http://198.199.120.41/pinkcabs/v1/user/location/_USER_FIRE_ID_";
     private String NEW_USER="http://198.199.120.41/pinkcabs/v1/register/user";
+    private static final String TAG = "ServerRequests";
 //
 //    public static ServerRequests getInstance() {
 //        if (requests==null) requests=new ServerRequests();
@@ -41,7 +43,7 @@ public class ServerRequests {
         this.callback = callback;
     }
 
-    private void getAllCabs(Context ctx) {
+     void getAllCabs(Context ctx) {
         JsonObjectRequest req = new JsonObjectRequest(
                 Request.Method.GET,
                 ALL_CABS,
@@ -100,6 +102,7 @@ public class ServerRequests {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            Log.d(TAG, "onResponse: "+response);
                             String res = new JSONObject(response).getString("result");
                             if (callback!=null) callback.response(res);
                         } catch (JSONException e) {
@@ -110,17 +113,22 @@ public class ServerRequests {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        if (callback!=null) callback.response(null);
+                       // if (callback!=null) callback.response(null);
+                        Log.d(TAG, "onErrorResponse: "+error.getMessage());
                     }
                 }
         ){
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map=new HashMap<>();
                 map.put("user_fireb_id",userFirebaseId);
                 return map;
             }
 
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
         };
         Volley.newRequestQueue(ctx).add(req);
     }
