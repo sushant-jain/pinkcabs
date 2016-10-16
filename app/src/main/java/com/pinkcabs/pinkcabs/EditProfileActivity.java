@@ -40,10 +40,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 12341;
     Uri uri;
 
-    EditText etName, etContact;
     FancyButton btnEditProfile, btnEditImage;
     EditText etName, etContact, etTrustedContact;
-    Button btnEditProfile, btnEditImage;
     ImageView imageView;
     StorageReference storageRef;
     boolean picChanged = false;
@@ -62,11 +60,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
         etName = (EditText) findViewById(R.id.et_name);
         etContact = (EditText) findViewById(R.id.et_contact);
-       // etTrustedContact = (EditText) findViewById(R.id.et_trusted_contact);
-        btnEditImage = (Button) findViewById(R.id.btn_edit_image);
-        btnEditProfile = (Button) findViewById(R.id.btn_edit_profile);
+        etTrustedContact = (EditText) findViewById(R.id.et_trusted_contact);
+
         btnEditImage = (FancyButton) findViewById(R.id.btn_edit_image);
-        btnEditProfile = (FancyButton) findViewById(R.id.btn_edit_image);
+        btnEditProfile = (FancyButton) findViewById(R.id.btn_edit_profile);
 
         imageView = (ImageView) findViewById(R.id.iv_image);
 
@@ -99,10 +96,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 String s1 = etName.getText().toString();
                 String s2 = etContact.getText().toString();
-<<<<<<< HEAD
-//                String s3 = etTrustedContact.getText().toString();
-                 FBUser fbuser = new FBUser(s2,user.getEmail(),"",s1);
-=======
                 String s3 = etTrustedContact.getText().toString();
                 FBUser fbuser = new FBUser(s1, user.getEmail(), s2, s3);
                 usersList.orderByChild("contact").equalTo(s3).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -118,7 +111,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
                     }
                 });
->>>>>>> c629374cbc6eabe919d30dc67b405de9404f2056
                 usersList.child(user.getUid()).setValue(fbuser).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

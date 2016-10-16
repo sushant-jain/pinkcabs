@@ -56,12 +56,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Location myLocation;
     String minDriverId;
     private static final String TAG = "MapsActivity";
-<<<<<<< HEAD
     public static final Integer PLACE_AUTOCOMPLETE_REQUEST_CODE = 2209;
     FirebaseUser user;
-=======
-    public static final Integer PLACE_AUTOCOMPLETE_REQUEST_CODE=2209;
->>>>>>> c629374cbc6eabe919d30dc67b405de9404f2056
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
